@@ -14,17 +14,17 @@
             <viewmodels:PatientListViewModel />
         </DockPanel.DataContext>
         <TextBlock DockPanel.Dock="Top" TextAlignment="Center" Text="{Binding FetchedPatientsNumber, StringFormat=Znaleziono {0} pacjentów}"/>
-        <ListBox x:Name="ListOfPatients" DockPanel.Dock="Left" ItemsSource="{Binding Patients}" ScrollViewer.VerticalScrollBarVisibility="Visible" >
+        <ListBox x:Name="ListOfPatients" DockPanel.Dock="Left" ItemsSource="{Binding Patients}" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectedPatient}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel DataContext="{Binding SelectedItem}">
+                    <StackPanel>
                         <TextBlock Text="{Binding Id }"/>
                         <TextBlock Text="{Binding Name}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <TabPanel DataContext="{Binding SelectedPatient}" >
+        <TabControl DataContext="{Binding SelectedPatient}">
             <TabItem Header="Details">
                 <Grid Name="PatientDetailsList" >
                     <Grid.RowDefinitions>
@@ -44,15 +44,15 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0">ID:</Label>
-                        <TextBox Grid.Row="0" Grid.Column="1" MinWidth="150" Text="Imię"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" MinWidth="150" Text="{Binding Id, Mode=OneWay}"/>
                         <Label Grid.Row="1">Name:</Label>
-                        <TextBox Grid.Row="1" Grid.Column="1" MinWidth="150" Text="Nazwisko"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" MinWidth="150" Text="{Binding Name, Mode=OneWay}"/>
                         <Label Grid.Row="2">Date of birth:</Label>
-                        <TextBox Grid.Row="2" Grid.Column="1" MinWidth="150" Text="Pesel"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" MinWidth="150" Text="{Binding BirthDate, Mode=OneWay}"/>
                         <Label Grid.Row="3">Gender:</Label>
-                        <ComboBox Grid.Row="3" Grid.Column="1"  DisplayMemberPath="Nazwa" SelectedItem="" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Gender, Mode=OneWay}" />
                         <Label Grid.Row="4">Address:</Label>
-                        <TextBox Grid.Row="4" Grid.Column="1"  Text="Adres" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Address, Mode=OneWay}" />
                     </Grid>
                 </Grid>
             </TabItem>
@@ -80,7 +80,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </TabItem>
-        </TabPanel>
+        </TabControl>
     </DockPanel>
 </Window>
 

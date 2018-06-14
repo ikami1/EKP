@@ -37,7 +37,7 @@ namespace WpfApp1.ViewModel
         {
             get
             {
-                return _patient.Id.ToString();
+                return _patient.Identifier[0].Value.ToString();
             }
         }
 
@@ -53,7 +53,21 @@ namespace WpfApp1.ViewModel
         {
             get
             {
-                return _patient.BirthDate.ToString();
+                if (_patient.BirthDate != null)
+                    return _patient.BirthDate.ToString();
+                else
+                    return "";
+            }
+        }
+
+        public string Address
+        {
+            get
+            {
+                if (_patient.Address.Count > 0)
+                    return _patient.Address[0].Text;
+                else
+                    return "";
             }
         }
 
