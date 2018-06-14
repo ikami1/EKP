@@ -3,27 +3,39 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:WpfApp1"
+        xmlns:Models="clr-namespace:Hl7.Fhir.Model;assembly=Hl7.Fhir.STU3.Core"
         xmlns:viewmodels="clr-namespace:WpfApp1.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
+        <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Models:AdministrativeGender"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </Window.Resources>
     <DockPanel >
         <DockPanel.DataContext>
             <viewmodels:PatientListViewModel />
         </DockPanel.DataContext>
         <TextBlock DockPanel.Dock="Top" TextAlignment="Center" Text="{Binding FetchedPatientsNumber, StringFormat=Znaleziono {0} pacjentów}"/>
-        <ListBox x:Name="ListOfPatients" DockPanel.Dock="Left" ItemsSource="{Binding Patients}" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectedPatient}" >
+        <ListBox x:Name="ListOfPatients" DockPanel.Dock="Left" MinHeight="380" ItemsSource="{Binding Patients}" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectedPatient}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
+                    <StackPanel Margin="0, 0, 0, 12">
                         <TextBlock Text="{Binding Id }"/>
                         <TextBlock Text="{Binding Name}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+            <Button Command="{Binding FilterDataCommand}">Filter</Button>
+            <TextBox MinWidth="100" Text="{Binding FilterValue}" ></TextBox>
+        </StackPanel>
         <TabControl DataContext="{Binding SelectedPatient}">
             <TabItem Header="Details">
                 <Grid Name="PatientDetailsList" >
@@ -44,15 +56,15 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0">ID:</Label>
-                        <TextBox Grid.Row="0" Grid.Column="1" MinWidth="150" Text="{Binding Id, Mode=OneWay}"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" MinWidth="150" Text="{Binding Id, Mode=OneWay}"/>
                         <Label Grid.Row="1">Name:</Label>
-                        <TextBox Grid.Row="1" Grid.Column="1" MinWidth="150" Text="{Binding Name, Mode=OneWay}"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" MinWidth="150" Text="{Binding Name, Mode=OneWay}"/>
                         <Label Grid.Row="2">Date of birth:</Label>
-                        <TextBox Grid.Row="2" Grid.Column="1" MinWidth="150" Text="{Binding BirthDate, Mode=OneWay}"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" MinWidth="150" Text="{Binding BirthDate, Mode=OneWay}"/>
                         <Label Grid.Row="3">Gender:</Label>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Gender, Mode=OneWay}" />
+                        <TextBox Grid.Row="3" Grid.Column="1" IsReadOnly="True" Text="{Binding Gender, Mode=OneWay}"/>
                         <Label Grid.Row="4">Address:</Label>
-                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Address, Mode=OneWay}" />
+                        <TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding Address, Mode=OneWay}" />
                     </Grid>
                 </Grid>
             </TabItem>

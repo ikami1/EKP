@@ -37,7 +37,22 @@ namespace WpfApp1.ViewModel
                 OnPropertyChanged(nameof(SelectedPatient));
             }
         }
-        
+
+
+        public string FilterValue { get; set; }
+        private RelayCommand _filterDataCommand;
+        public RelayCommand FilterDataCommand { get => _filterDataCommand; }
+        private void FilterData()
+        {
+            if (string.IsNullOrEmpty(FilterValue))
+            {
+                _view.Filter = null;
+            }
+            else
+            {
+                _view.Filter = (c) => ((PatientViewModel)c).Name.Contains(FilterValue);
+            }
+        }
 
         public PatientListViewModel()
         {
@@ -47,7 +62,8 @@ namespace WpfApp1.ViewModel
             SelectedPatient = Patients[0];
 
             _view = (ListCollectionView)CollectionViewSource.GetDefaultView(Patients);
-            
+
+            _filterDataCommand = new RelayCommand(param => this.FilterData());
         }
 
         private void FetchPatientList()

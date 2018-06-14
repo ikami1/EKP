@@ -45,7 +45,7 @@ namespace WpfApp1.ViewModel
         {
             get
             {
-                return _patient.Gender.ToString();
+                return _patient.Gender.Value.ToString();
             }
         }
 
