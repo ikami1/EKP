@@ -37,22 +37,7 @@ namespace WpfApp1.ViewModel
                 OnPropertyChanged(nameof(SelectedPatient));
             }
         }
-
-
-        public string FilterValue { get; set; }
-        private RelayCommand _filterDataCommand;
-        public RelayCommand FilterDataCommand { get => _filterDataCommand; }
-        private void FilterData()
-        {
-            if (string.IsNullOrEmpty(FilterValue))
-            {
-                _view.Filter = null;
-            }
-            else
-            {
-                _view.Filter = (c) => ((PatientViewModel)c).Name.Contains(FilterValue);
-            }
-        }
+        
 
         public PatientListViewModel()
         {
@@ -62,19 +47,18 @@ namespace WpfApp1.ViewModel
             SelectedPatient = Patients[0];
 
             _view = (ListCollectionView)CollectionViewSource.GetDefaultView(Patients);
-
-            _filterDataCommand = new RelayCommand(param => this.FilterData());
+            
         }
 
         private void FetchPatientList()
         {
-            var client = new FhirClient("http://vonk.fire.ly");
+            var client = new FhirClient("http://test.fhir.org/r4");
             client.PreferredFormat = ResourceFormat.Json;
 
-            var query = new string[] { "gender=male" };
-            var bundle = client.Search("Patient", query);
+            //var query = new string[] { "gender=male" };
+            //var bundle = client.Search("Patient", query);
 
-            //var bundle = client.Search("Patient");
+            var bundle = client.Search("Patient");
 
             FetchedPatientsNumber = bundle.Entry.Count().ToString();
 

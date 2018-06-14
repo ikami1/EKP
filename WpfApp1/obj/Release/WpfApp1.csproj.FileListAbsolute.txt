@@ -22,3 +22,5 @@ c:\users\m\source\repos\EKP - FHIR\WpfApp1\obj\Release\WpfApp1.csproj.CoreCompil
 c:\users\m\source\repos\EKP - FHIR\WpfApp1\obj\Release\WpfApp1.csproj.CopyComplete
 c:\users\m\source\repos\EKP - FHIR\WpfApp1\obj\Release\WpfApp1.exe
 c:\users\m\source\repos\EKP - FHIR\WpfApp1\obj\Release\WpfApp1.pdb
+C:\Users\M\source\repos\EKP - FHIR\WpfApp1\bin\Release\System.ValueTuple.dll
+C:\Users\M\source\repos\EKP - FHIR\WpfApp1\obj\Release\GeneratedInternalTypeHelper.g.cs

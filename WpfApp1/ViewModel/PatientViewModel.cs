@@ -4,11 +4,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 
 namespace WpfApp1.ViewModel
 {
     class PatientViewModel: ViewModelBase
     {
+        private MedicationStatement _medicationStatment;
+        public MedicationStatement MedicationStatement
+        {
+            get => _medicationStatment;
+            set
+            {
+                _medicationStatment = value;
+            }
+        }
+
+        private Medication _medication;
+        public Medication Medication
+        {
+            get => _medication;
+            set
+            {
+                _medication = value;
+            }
+        }
+
+        private Observation _observation;
+        public Observation Observation
+        {
+            get => _observation;
+            set
+            {
+                _observation = value;
+            }
+        }
+
         private Patient _patient;
         public Patient Patient
         {
@@ -74,6 +106,24 @@ namespace WpfApp1.ViewModel
         public PatientViewModel(Patient p)
         {
             Patient = p;
+
+
+            var client = new FhirClient("http://test.fhir.org/r4");
+            client.PreferredFormat = ResourceFormat.Json;
+
+            var bundle = client.Search("Patient/" + Id + "/$everything");
+
+            foreach (var entry in bundle.Entry)
+            {
+                try
+                {
+                    Console.WriteLine(entry.Resource.TypeName);
+                }
+                catch (Exception e)
+                {
+                }
+
+            }
         }
 
     }

@@ -17,13 +17,13 @@ namespace EKP___FHIR
 
         public static void connection()
         {
-            var client = new FhirClient("http://vonk.fire.ly");
+            var client = new FhirClient("http://test.fhir.org/r4");
             client.PreferredFormat = ResourceFormat.Json;
 
-            var query = new string[] { "gender=male" };
-            var bundle = client.Search("Patient", query);
+            //var query = new string[] { "gender=male" };
+            //var bundle = client.Search("Patient", query);
 
-            //var bundle = client.Search("Patient");
+            var bundle = client.Search("Patient");
 
             Console.WriteLine( "Got " + bundle.Entry.Count() + " records!");
 
