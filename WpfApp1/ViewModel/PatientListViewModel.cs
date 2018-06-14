@@ -57,22 +57,7 @@ namespace WpfApp1.ViewModel
             }
         }
 
-        private RelayCommand _plotCommand;
-        public RelayCommand PlotCommand { get => _plotCommand; }
-        private PointCollection _plotDataSet;
-        public PointCollection PlotDataSet
-        {
-            get => _plotDataSet;
-            set
-            {
-                _plotDataSet = value;
-                OnPropertyChanged(nameof(PlotDataSet));
-            }
-        }
-        private void PlotData()
-        {
-            PlotDataSet = SelectedPatient.GeneratePlotData();
-        }
+        
 
         public PatientListViewModel()
         {
@@ -80,17 +65,11 @@ namespace WpfApp1.ViewModel
 
             FetchPatientList();
             SelectedPatient = Patients[0];
-
-            List<Point> test = new List<Point>();
-            for (int i = 1; i < 5; i++)
-                test.Add(new Point(i, i));
-
-            _plotDataSet = new PointCollection(test);
+            
 
             _view = (ListCollectionView)CollectionViewSource.GetDefaultView(Patients);
 
             _filterDataCommand = new RelayCommand(param => this.FilterData());
-            _plotCommand = new RelayCommand(param => this.PlotData());
         }
 
         private void FetchPatientList()

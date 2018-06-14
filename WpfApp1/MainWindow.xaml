@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:WpfApp1"
+        xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:Models="clr-namespace:Hl7.Fhir.Model;assembly=Hl7.Fhir.STU3.Core"
         xmlns:viewmodels="clr-namespace:WpfApp1.ViewModel"
         mc:Ignorable="d"
@@ -21,7 +22,7 @@
         <DockPanel.DataContext>
             <viewmodels:PatientListViewModel />
         </DockPanel.DataContext>
-        <TextBlock DockPanel.Dock="Top" TextAlignment="Center" Text="{Binding FetchedPatientsNumber, StringFormat=Znaleziono {0} pacjentów}"/>
+        <TextBlock DockPanel.Dock="Top" Text="{Binding FetchedPatientsNumber, StringFormat=Znaleziono {0} pacjentów}"/>
         <ListBox x:Name="ListOfPatients" DockPanel.Dock="Left" MinHeight="380" ItemsSource="{Binding Patients}" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectedPatient}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -104,9 +105,11 @@
                         <ColumnDefinition Width="2*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Polyline Grid.Column="0" DockPanel.Dock="Left" Points="{Binding PlotDataSet}" Stroke="Azure" StrokeThickness="1.5" InkCanvas.Top="50" >
-
-                    </Polyline>
+                    <oxy:Plot Title="{Binding ChosenValue}">
+                        <oxy:Plot.Series>
+                            <oxy:LineSeries ItemsSource="{Binding PlotDataSet}" />
+                        </oxy:Plot.Series>
+                    </oxy:Plot>
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />

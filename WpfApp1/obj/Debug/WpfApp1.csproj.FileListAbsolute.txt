@@ -24,3 +24,7 @@ D:\Users\Aven\Documents\Studia\EKP\WpfApp1\obj\Debug\WpfApp1.csproj.CoreCompileI
 D:\Users\Aven\Documents\Studia\EKP\WpfApp1\obj\Debug\WpfApp1.csproj.CopyComplete
 D:\Users\Aven\Documents\Studia\EKP\WpfApp1\obj\Debug\WpfApp1.exe
 D:\Users\Aven\Documents\Studia\EKP\WpfApp1\obj\Debug\WpfApp1.pdb
+D:\Users\Aven\Documents\Studia\EKP\WpfApp1\bin\Debug\OxyPlot.dll
+D:\Users\Aven\Documents\Studia\EKP\WpfApp1\bin\Debug\OxyPlot.Wpf.dll
+D:\Users\Aven\Documents\Studia\EKP\WpfApp1\bin\Debug\OxyPlot.Wpf.pdb
+D:\Users\Aven\Documents\Studia\EKP\WpfApp1\bin\Debug\OxyPlot.Wpf.xml

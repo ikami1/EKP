@@ -8,6 +8,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using System.Windows.Media;
 using System.Windows;
+using OxyPlot;
 
 namespace WpfApp1.ViewModel
 {
@@ -110,6 +111,8 @@ namespace WpfApp1.ViewModel
         {
             Patient = p;
             HistoryCount = 0;
+
+            _plotCommand = new RelayCommand(param => this.GeneratePlotData());
         }
 
         public int HistoryCount { get; set; }
@@ -143,14 +146,27 @@ namespace WpfApp1.ViewModel
         public Observation End { get; set; }
         public List<Observation> ChosenSet { get; set; }
 
-        public PointCollection GeneratePlotData()
+        private RelayCommand _plotCommand;
+        public RelayCommand PlotCommand { get => _plotCommand; }
+        private List<DataPoint> _plotDataSet;
+        public List<DataPoint> PlotDataSet
         {
-            List<Point> tempList = new List<Point>();
+            get => _plotDataSet;
+            set
+            {
+                _plotDataSet = value;
+                OnPropertyChanged(nameof(PlotDataSet));
+            }
+        }
+        public void GeneratePlotData()
+        {
+            List<DataPoint> tempList = new List<DataPoint>();
             for(int i=ChosenSet.IndexOf(Start);i<=ChosenSet.IndexOf(End);i++)
             {
-                tempList.Add(new Point(i, Convert.ToDouble(ChosenSet[i].Value.ToString())));
+                SimpleQuantity temp = (SimpleQuantity) ChosenSet[i].Value;
+                tempList.Add(new DataPoint(i, Convert.ToDouble(temp.Value)));
             }
-            return new PointCollection(tempList);
+            PlotDataSet = tempList;
         }
 
         public void GetHistoryData()

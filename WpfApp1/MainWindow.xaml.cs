@@ -14,9 +14,12 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using OxyPlot;
+using OxyPlot.Series;
 
 namespace WpfApp1
 {
+    
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -27,28 +30,5 @@ namespace WpfApp1
             InitializeComponent();
         }
 
-        /*private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var endpoint = new Uri("http://vonk.fire.ly");
-            var client = new FhirClient(endpoint);
-
-            //var query = new string[] { "name=Rob" };
-            //var bundle = client.Search("Patient", query);
-
-            var bundle = client.Search("Patient");
-
-            button1.Content = "Got " + bundle.Entry.Count() + " records!";
-
-            label1.Content = "";
-            foreach (var entry in bundle.Entry)
-            {
-                try
-                {
-                    Patient p = (Patient)entry.Resource;
-                    label1.Content = label1.Content + p.Id + " " + p.Name.First().Text + "\r\n";
-                }
-                catch (Exception exeption) { }
-            }
-        }*/
     }
 }
