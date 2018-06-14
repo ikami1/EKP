@@ -81,13 +81,16 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0">
                                         <Ellipse Width="20" Height="20" Stroke="AliceBlue" Fill="BlueViolet" StrokeThickness="2" />
                                         <Label>!</Label>
                                     </Grid>
-                                    <TextBlock Grid.Column="1" Text="{Binding Path=Meta.LastUpdated}" Margin="0 0 10 0" />
-                                    <TextBlock Grid.Column="2" Text="{Binding Path=Comment}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding Path=Effective}" Margin="0 0 5 0" />
+                                    <TextBlock Grid.Column="2" Text="{Binding Path=TypeName}" Margin="0 0 5 0"/>
+                                    <TextBlock Grid.Column="3" Text="{Binding Path=Code.Text}" Margin="0 0 5 0"/>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

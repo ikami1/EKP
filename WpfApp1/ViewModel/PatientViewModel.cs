@@ -113,10 +113,10 @@ namespace WpfApp1.ViewModel
         }
 
         public int HistoryCount { get; set; }
-        public List<Resource> HistoryList { get; set; } = new List<Resource>();
+        public List<Observation> HistoryList { get; set; } = new List<Observation>();
 
         public Dictionary<string, List<Observation>> PlotData { get; set; } = new Dictionary<string, List<Observation>>();
-        public string[] PossibleValues { get; } = new string[] { "height", "heart_rate", "temperature" };
+        public string[] PossibleValues { get; } = new string[] { "height", "heart_rate", "temperature", "weight", "bmi" };
         public string _chosenValue;
         public string ChosenValue {
             get => _chosenValue;
@@ -134,6 +134,9 @@ namespace WpfApp1.ViewModel
                     Start = null;
                     End = null;
                 }
+                OnPropertyChanged(nameof(ChosenSet));
+                OnPropertyChanged(nameof(Start));
+                OnPropertyChanged(nameof(End));
             }
         }
         public Observation Start { get; set; }
@@ -188,15 +191,18 @@ namespace WpfApp1.ViewModel
 
             }
             
-            HistoryList.AddRange(MedicationRequests);
-            HistoryList.AddRange(Medications);
+            //HistoryList.AddRange(MedicationRequests);
+            //HistoryList.AddRange(Medications);
             HistoryList.AddRange(Observations);
             HistoryCount = HistoryList.Count;
-            HistoryList.OrderBy(f => f.Meta.LastUpdated );
+            HistoryList.OrderBy(f => f.Effective );
 
             PlotData.Add("height", new List<Observation>());
             PlotData.Add("heart_rate", new List<Observation>());
             PlotData.Add("temperature", new List<Observation>());
+            PlotData.Add("weight", new List<Observation>());
+            PlotData.Add("bmi", new List<Observation>());
+
 
             foreach (Observation o in Observations)
             {
@@ -213,6 +219,14 @@ namespace WpfApp1.ViewModel
                     case "temperature":
                         PlotData["temperature"].Add(o);
                         PlotData["temperature"].OrderBy(f => f.Effective);
+                        break;
+                    case "weight":
+                        PlotData["weight"].Add(o);
+                        PlotData["weight"].OrderBy(f => f.Effective);
+                        break;
+                    case "bmi":
+                        PlotData["bmi"].Add(o);
+                        PlotData["bmi"].OrderBy(f => f.Effective);
                         break;
                     default:
                         break;
