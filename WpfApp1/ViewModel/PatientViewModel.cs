@@ -21,13 +21,13 @@ namespace WpfApp1.ViewModel
             }
         }
 
-        private Medication _medication;
-        public Medication Medication
+        private List<Medication> _medications;
+        public List<Medication> Medications
         {
-            get => _medication;
+            get => _medications;
             set
             {
-                _medication = value;
+                _medications = value;
             }
         }
 
@@ -114,7 +114,36 @@ namespace WpfApp1.ViewModel
 
         public void GetHistoryData()
         {
-            var client = new FhirClient("http://test.fhir.org/r4");
+            HistoryCount = 1;
+            var client = new FhirClient("https://api-stu3.hspconsortium.org/STU301withSynthea/open");
+            client.PreferredFormat = ResourceFormat.Json;
+
+            var bundle = client.Search("Patient/" + Id + "/$everything");
+
+            foreach (var entry in bundle.Entry)
+            {
+                try
+                {
+                    switch (entry.Resource.TypeName)
+                    {
+                        case "MedicationRequests":
+                            MedicationRequests.Add((MedicationRequest)entry.Resource);
+                            break;
+                        case "Medication":
+                            Medications.Add((Medication)entry.Resource);
+                            break;
+                        case "Observation":
+                            Observations.Add((Observation)entry.Resource);
+                            break;
+                    }
+                }
+                catch (Exception e)
+                {
+                }
+
+            }
+            
+            /*var client = new FhirClient("http://test.fhir.org/r4");
             client.PreferredFormat = ResourceFormat.Json;
             var query = new string[] { "subject._id="+_patient.Id };
             var bundle = client.Search("MedicationRequest", query);
@@ -129,7 +158,7 @@ namespace WpfApp1.ViewModel
             foreach (var entry in bundle.Entry)
             {
                 Observations.Add((Observation)entry.Resource);
-            }
+            }*/
         }
 
     }

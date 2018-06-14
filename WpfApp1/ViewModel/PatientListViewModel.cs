@@ -34,26 +34,10 @@ namespace WpfApp1.ViewModel
             set
             {
                 _selectedPatient = value;
-                if((_selectedPatient!=null)&&(_selectedPatient.HistoryCount==0))
-                    _selectedPatient.GetHistoryData();
                 OnPropertyChanged(nameof(SelectedPatient));
             }
         }
-
-        public string FilterValue { get; set; }
-        private RelayCommand _filterDataCommand;
-        public RelayCommand FilterDataCommand { get => _filterDataCommand; }
-        private void FilterData()
-        {
-            if (string.IsNullOrEmpty(FilterValue))
-            {
-                _view.Filter = null;
-            }
-            else
-            {
-                _view.Filter = (c) => ((PatientViewModel)c).Name.Contains(FilterValue);
-            }
-        }
+        
 
         public PatientListViewModel()
         {
@@ -63,12 +47,12 @@ namespace WpfApp1.ViewModel
             SelectedPatient = Patients[0];
 
             _view = (ListCollectionView)CollectionViewSource.GetDefaultView(Patients);
-            _filterDataCommand = new RelayCommand(param => this.FilterData());
+            
         }
 
         private void FetchPatientList()
         {
-            var client = new FhirClient("http://test.fhir.org/r4");
+            var client = new FhirClient("https://api-stu3.hspconsortium.org/STU301withSynthea/open");
             client.PreferredFormat = ResourceFormat.Json;
 
             //var query = new string[] { "gender=male" };
@@ -90,19 +74,7 @@ namespace WpfApp1.ViewModel
                 }
 
             }
-            bundle = client.Search("Patient/_search?_id=pat1");
-            foreach (var entry in bundle.Entry)
-            {
-                try
-                {
-                    Patient p = (Patient)entry.Resource;
-                    Patients.Add(new PatientViewModel(p));
-                }
-                catch (Exception e)
-                {
-                }
-
-            }
+            
         }
 
     }
