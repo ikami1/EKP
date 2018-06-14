@@ -27,7 +27,7 @@ namespace WpfApp1
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /*private void Button_Click(object sender, RoutedEventArgs e)
         {
             var endpoint = new Uri("http://vonk.fire.ly");
             var client = new FhirClient(endpoint);
@@ -49,6 +49,6 @@ namespace WpfApp1
                 }
                 catch (Exception exeption) { }
             }
-        }
+        }*/
     }
 }

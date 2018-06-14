@@ -4,11 +4,83 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
+        xmlns:viewmodels="clr-namespace:WpfApp1.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" Margin="251,57,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click" Height="67"/>
-        <Label x:Name="label1" Content="Label" HorizontalAlignment="Left" Margin="160,171,0,0" VerticalAlignment="Top" Height="176" Width="338"/>
-
-    </Grid>
+    <Window.Resources>
+    </Window.Resources>
+    <DockPanel >
+        <DockPanel.DataContext>
+            <viewmodels:PatientListViewModel />
+        </DockPanel.DataContext>
+        <TextBlock DockPanel.Dock="Top" TextAlignment="Center" Text="{Binding FetchedPatientsNumber, StringFormat=Znaleziono {0} pacjentów}"/>
+        <ListBox x:Name="ListOfPatients" DockPanel.Dock="Left" ItemsSource="{Binding Patients}" ScrollViewer.VerticalScrollBarVisibility="Visible" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel DataContext="{Binding SelectedItem}">
+                        <TextBlock Text="{Binding Id }"/>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TabPanel DataContext="{Binding SelectedPatient}" >
+            <TabItem Header="Details">
+                <Grid Name="PatientDetailsList" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0">ID:</Label>
+                        <TextBox Grid.Row="0" Grid.Column="1" MinWidth="150" Text="Imię"/>
+                        <Label Grid.Row="1">Name:</Label>
+                        <TextBox Grid.Row="1" Grid.Column="1" MinWidth="150" Text="Nazwisko"/>
+                        <Label Grid.Row="2">Date of birth:</Label>
+                        <TextBox Grid.Row="2" Grid.Column="1" MinWidth="150" Text="Pesel"/>
+                        <Label Grid.Row="3">Gender:</Label>
+                        <ComboBox Grid.Row="3" Grid.Column="1"  DisplayMemberPath="Nazwa" SelectedItem="" />
+                        <Label Grid.Row="4">Address:</Label>
+                        <TextBox Grid.Row="4" Grid.Column="1"  Text="Adres" />
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="History">
+                <ListBox x:Name="HistoryList" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid>
+                                    <Ellipse Width="20" Height="20" Stroke="AliceBlue" Fill="BlueViolet" StrokeThickness="2" />
+                                    <Label>!</Label>
+                                </Grid>
+                                <TextBlock Grid.Column="1" Text="Nazwa" />
+                                <TextBlock Grid.Column="2" Text="Data" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </TabItem>
+        </TabPanel>
+    </DockPanel>
 </Window>
+
