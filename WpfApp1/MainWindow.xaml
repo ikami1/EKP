@@ -69,28 +69,31 @@
                 </Grid>
             </TabItem>
             <TabItem Header="History">
-                <ListBox x:Name="HistoryList" ScrollViewer.VerticalScrollBarVisibility="Visible">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
+                <DockPanel>
+                    <ListBox x:Name="HistoryList" ItemsSource="{Binding MedicationRequests}" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
                                 <Grid>
-                                    <Ellipse Width="20" Height="20" Stroke="AliceBlue" Fill="BlueViolet" StrokeThickness="2" />
-                                    <Label>!</Label>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Ellipse Width="20" Height="20" Stroke="AliceBlue" Fill="BlueViolet" StrokeThickness="2" />
+                                        <Label>!</Label>
+                                    </Grid>
+                                    <TextBlock Grid.Column="1" Text="Nazwa" />
+                                    <TextBlock Grid.Column="2" Text="{Binding Text}" />
                                 </Grid>
-                                <TextBlock Grid.Column="1" Text="Nazwa" />
-                                <TextBlock Grid.Column="2" Text="Data" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <TextBox DockPanel.Dock="Bottom" Text="{Binding HistoryCount}" />
+                </DockPanel>
             </TabItem>
         </TabControl>
     </DockPanel>

@@ -11,13 +11,13 @@ namespace WpfApp1.ViewModel
 {
     class PatientViewModel: ViewModelBase
     {
-        private MedicationStatement _medicationStatment;
-        public MedicationStatement MedicationStatement
+        private List<MedicationRequest> _medicationRequests;
+        public List<MedicationRequest> MedicationRequests
         {
-            get => _medicationStatment;
+            get => _medicationRequests;
             set
             {
-                _medicationStatment = value;
+                _medicationRequests = value;
             }
         }
 
@@ -31,13 +31,13 @@ namespace WpfApp1.ViewModel
             }
         }
 
-        private Observation _observation;
-        public Observation Observation
+        private List<Observation> _observations;
+        public List<Observation> Observations
         {
-            get => _observation;
+            get => _observations;
             set
             {
-                _observation = value;
+                _observations = value;
             }
         }
 
@@ -69,7 +69,8 @@ namespace WpfApp1.ViewModel
         {
             get
             {
-                return _patient.Identifier[0].Value.ToString();
+                return _patient.Id;
+                //return _patient.Identifier[0].Value.ToString();
             }
         }
 
@@ -106,23 +107,28 @@ namespace WpfApp1.ViewModel
         public PatientViewModel(Patient p)
         {
             Patient = p;
+            HistoryCount = 0;
+        }
 
+        public int HistoryCount { get; set; }
 
+        public void GetHistoryData()
+        {
             var client = new FhirClient("http://test.fhir.org/r4");
             client.PreferredFormat = ResourceFormat.Json;
-
-            var bundle = client.Search("Patient/" + Id + "/$everything");
-
+            var query = new string[] { "subject._id="+_patient.Id };
+            var bundle = client.Search("MedicationRequest", query);
+            HistoryCount += bundle.Entry.Count;
             foreach (var entry in bundle.Entry)
             {
-                try
-                {
-                    Console.WriteLine(entry.Resource.TypeName);
-                }
-                catch (Exception e)
-                {
-                }
+                MedicationRequests.Add((MedicationRequest) entry.Resource);
+            }
 
+            bundle = client.Search("Observation/_search?subject._id=" + _patient.Id);
+            HistoryCount += bundle.Entry.Count;
+            foreach (var entry in bundle.Entry)
+            {
+                Observations.Add((Observation)entry.Resource);
             }
         }
 
