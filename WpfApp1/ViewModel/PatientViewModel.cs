@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using System.Windows.Media;
+using System.Windows;
 
 namespace WpfApp1.ViewModel
 {
@@ -111,14 +113,55 @@ namespace WpfApp1.ViewModel
         }
 
         public int HistoryCount { get; set; }
+        public List<Resource> HistoryList { get; set; } = new List<Resource>();
+
+        public Dictionary<string, List<Observation>> PlotData { get; set; } = new Dictionary<string, List<Observation>>();
+        public string[] PossibleValues { get; } = new string[] { "height", "heart_rate", "temperature" };
+        public string _chosenValue;
+        public string ChosenValue {
+            get => _chosenValue;
+            set
+            {
+                _chosenValue = value;
+                ChosenSet = PlotData[_chosenValue];
+                if (ChosenSet.Count > 0)
+                {
+                    Start = PlotData[_chosenValue][0];
+                    End = PlotData[_chosenValue][ChosenSet.Count - 1];
+                }
+                else
+                {
+                    Start = null;
+                    End = null;
+                }
+            }
+        }
+        public Observation Start { get; set; }
+        public Observation End { get; set; }
+        public List<Observation> ChosenSet { get; set; }
+
+        public PointCollection GeneratePlotData()
+        {
+            List<Point> tempList = new List<Point>();
+            for(int i=ChosenSet.IndexOf(Start);i<=ChosenSet.IndexOf(End);i++)
+            {
+                tempList.Add(new Point(i, Convert.ToDouble(ChosenSet[i].Value.ToString())));
+            }
+            return new PointCollection(tempList);
+        }
 
         public void GetHistoryData()
         {
             HistoryCount = 1;
+            MedicationRequests = new List<MedicationRequest>();
+            Medications = new List<Medication>();
+            Observations = new List<Observation>();
+
             var client = new FhirClient("https://api-stu3.hspconsortium.org/STU301withSynthea/open");
             client.PreferredFormat = ResourceFormat.Json;
 
-            var bundle = client.Search("Patient/" + Id + "/$everything");
+            var query = new string[] { "_count=50" };
+            var bundle = client.Search("Patient/" + Id + "/$everything", query);
 
             foreach (var entry in bundle.Entry)
             {
@@ -135,6 +178,8 @@ namespace WpfApp1.ViewModel
                         case "Observation":
                             Observations.Add((Observation)entry.Resource);
                             break;
+                        default:
+                            break;
                     }
                 }
                 catch (Exception e)
@@ -143,6 +188,39 @@ namespace WpfApp1.ViewModel
 
             }
             
+            HistoryList.AddRange(MedicationRequests);
+            HistoryList.AddRange(Medications);
+            HistoryList.AddRange(Observations);
+            HistoryCount = HistoryList.Count;
+            HistoryList.OrderBy(f => f.Meta.LastUpdated );
+
+            PlotData.Add("height", new List<Observation>());
+            PlotData.Add("heart_rate", new List<Observation>());
+            PlotData.Add("temperature", new List<Observation>());
+
+            foreach (Observation o in Observations)
+            {
+                switch (o.Code.Text)
+                {
+                    case "height":
+                        PlotData["height"].Add(o);
+                        PlotData["height"].OrderBy(f => f.Effective);
+                        break;
+                    case "heart_rate":
+                        PlotData["heart_rate"].Add(o);
+                        PlotData["heart_rate"].OrderBy(f => f.Effective);
+                        break;
+                    case "temperature":
+                        PlotData["temperature"].Add(o);
+                        PlotData["temperature"].OrderBy(f => f.Effective);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            ChosenValue = PossibleValues[0];
+
+
             /*var client = new FhirClient("http://test.fhir.org/r4");
             client.PreferredFormat = ResourceFormat.Json;
             var query = new string[] { "subject._id="+_patient.Id };

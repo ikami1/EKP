@@ -70,7 +70,7 @@
             </TabItem>
             <TabItem Header="History">
                 <DockPanel>
-                    <ListBox x:Name="HistoryList" ItemsSource="{Binding MedicationRequests}" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <ListBox x:Name="HistoryListing" ItemsSource="{Binding HistoryList}" ScrollViewer.VerticalScrollBarVisibility="Visible">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -78,16 +78,16 @@
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Grid>
+                                    <Grid Grid.Column="0">
                                         <Ellipse Width="20" Height="20" Stroke="AliceBlue" Fill="BlueViolet" StrokeThickness="2" />
                                         <Label>!</Label>
                                     </Grid>
-                                    <TextBlock Grid.Column="1" Text="Nazwa" />
-                                    <TextBlock Grid.Column="2" Text="{Binding Text}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding Path=Meta.LastUpdated}" Margin="0 0 10 0" />
+                                    <TextBlock Grid.Column="2" Text="{Binding Path=Comment}" />
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -101,8 +101,8 @@
                         <ColumnDefinition Width="2*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Polyline Grid.Column="0" DockPanel.Dock="Left">
-                        
+                    <Polyline Grid.Column="0" DockPanel.Dock="Left" Points="{Binding PlotDataSet}" Stroke="Azure" StrokeThickness="1.5" InkCanvas.Top="50" >
+
                     </Polyline>
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
@@ -120,12 +120,12 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0" Grid.Row="0" >Pomiary:</Label>
-                            <ComboBox x:Name="Selection" Grid.Column="1" Grid.Row="0" ></ComboBox>
+                            <ComboBox x:Name="Selection" ItemsSource="{Binding PossibleValues}" SelectedItem="{Binding ChosenValue}" Grid.Column="1" Grid.Row="0" ></ComboBox>
                             <Label Grid.Column="0" Grid.Row="1" >Start:</Label>
-                            <ComboBox x:Name="Start" Grid.Column="1" Grid.Row="1" ></ComboBox>
+                            <ComboBox x:Name="Start" ItemsSource="{Binding ChosenSet}" DisplayMemberPath="Effective" SelectedItem="{Binding Start}" Grid.Column="1" Grid.Row="1" ></ComboBox>
                             <Label Grid.Column="0" Grid.Row="2" >Koniec:</Label>
-                            <ComboBox x:Name="End" Grid.Column="1" Grid.Row="2" ></ComboBox>
-                            <Button Grid.Row="3" >Apply</Button>
+                            <ComboBox x:Name="End" ItemsSource="{Binding ChosenSet}" DisplayMemberPath="Effective" SelectedItem="{Binding End}" Grid.Column="1" Grid.Row="2" ></ComboBox>
+                            <Button Grid.Row="3" Command="{Binding PlotCommand}">Apply</Button>
                         </Grid>
                     </Grid>
                 </Grid>
