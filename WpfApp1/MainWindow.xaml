@@ -92,8 +92,43 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <TextBox DockPanel.Dock="Bottom" Text="{Binding HistoryCount}" />
+                    <TextBox DockPanel.Dock="Bottom" Text="{Binding HistoryCount, StringFormat=Pobrano {0} zdarzeń}" />
                 </DockPanel>
+            </TabItem>
+            <TabItem Header="Wizualizacja">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Polyline Grid.Column="0" DockPanel.Dock="Left">
+                        
+                    </Polyline>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Grid.Row="0" >Pomiary:</Label>
+                            <ComboBox x:Name="Selection" Grid.Column="1" Grid.Row="0" ></ComboBox>
+                            <Label Grid.Column="0" Grid.Row="1" >Start:</Label>
+                            <ComboBox x:Name="Start" Grid.Column="1" Grid.Row="1" ></ComboBox>
+                            <Label Grid.Column="0" Grid.Row="2" >Koniec:</Label>
+                            <ComboBox x:Name="End" Grid.Column="1" Grid.Row="2" ></ComboBox>
+                            <Button Grid.Row="3" >Apply</Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </TabItem>
         </TabControl>
     </DockPanel>
