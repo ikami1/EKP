@@ -1,0 +1,16 @@
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\bin\Release\EKP - FHIR.exe.config
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\bin\Release\EKP - FHIR.exe
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\bin\Release\EKP - FHIR.pdb
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\bin\Release\Hl7.Fhir.STU3.Core.dll
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\bin\Release\Hl7.Fhir.Support.dll
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\bin\Release\Hl7.FhirPath.dll
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\bin\Release\Newtonsoft.Json.dll
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\bin\Release\Hl7.Fhir.STU3.Core.xml
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\bin\Release\Hl7.Fhir.Support.xml
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\bin\Release\Hl7.FhirPath.xml
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\bin\Release\Newtonsoft.Json.xml
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\obj\Release\EKP - FHIR.csprojResolveAssemblyReference.cache
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\obj\Release\EKP - FHIR.csproj.CoreCompileInputs.cache
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\obj\Release\EKP - FHIR.csproj.CopyComplete
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\obj\Release\EKP - FHIR.exe
+c:\users\m\source\repos\EKP - FHIR\EKP - FHIR\obj\Release\EKP - FHIR.pdb
